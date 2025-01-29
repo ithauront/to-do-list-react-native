@@ -3,20 +3,17 @@ import { styles } from "./styles";
 import { useState } from "react";
 
 interface TaskProps {
-    task: string,
-    isCompleted?: string
+    id: string,
+    description: string,
+    completed?: boolean,
+    onToggleTask: (id:string)=>void
 }
 
-export function Task({task, isCompleted}: TaskProps) {
-    const [completed, setCompleted] = useState(false)
-
-    function handleCompleteTask () {
-        if(completed === false) {
-            setCompleted(true)
-        }
-        else{ setCompleted(false)}
-        console.log(completed)
+export function Task({id, description, completed, onToggleTask}: TaskProps) {
+    function handleCompleteTask() {
+        onToggleTask(id)
     }
+
     return(
         <View style={styles.container} >
             <TouchableOpacity 
@@ -25,7 +22,7 @@ export function Task({task, isCompleted}: TaskProps) {
                 {completed?<Text>✔</Text>:null}
             </TouchableOpacity>
            
-            <Text style={completed?styles.nameCheck:styles.name}>{task}</Text>
+            <Text style={completed?styles.nameCheck:styles.name}>{description}</Text>
             <TouchableOpacity >
                <Image source={require('./img/trash.png')} />
             </TouchableOpacity>

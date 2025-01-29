@@ -5,8 +5,29 @@ import { Form } from "../components/form";
 import { Counter } from "../components/counter";
 import { Task } from "../components/tasks";
 
+interface tasksData {
+    id:string,
+    description: string,
+    completed: boolean
+}
+
 export function Home(){
-   const tasks = ['Fazer as compras', 'Lavar as roupas']
+   const [tasks, setTask] = useState<tasksData[]>([
+    { id:'1',  description:'Fazer as compras', completed: false},
+     { id:'2',  description:'Lavar as roupas', completed: false}
+    ])
+
+    function handleToogleTask(id: string) {
+        setTask(prev=> prev.map(task=>task.id ===id
+             ? {...task, completed:!task.completed}
+            :task))
+    }
+
+    const sortedTasks= [...tasks].sort((a,b)=>{
+        return Number(a.completed) - Number(b.completed)})
+
+    const completedCount = tasks.filter(task=>task.completed).length
+    
     return(
         <View style={styles.container}>
             <View style={styles.background}>
@@ -21,15 +42,20 @@ export function Home(){
             </View>
             <View style={{flexDirection: 'row', gap: 8,}}>
             <Text style={{color:'#8284FA',fontWeight: '700'}}>Concluidas</Text>
-            <Counter  counterNumber={4}/>
+            <Counter  counterNumber={completedCount}/>
             </View>
          </View>
          <View style={{width: '90%'}}>
          <FlatList 
-    data={tasks}
-    keyExtractor={item =>item}
+    data={sortedTasks}
+    keyExtractor={item =>item.id}
     renderItem={({item}) =>(
-      <Task task={item}/>
+      <Task
+       id={item.id}
+       description={item.description}
+       completed={item.completed}
+       onToggleTask={handleToogleTask}
+       />
     )}
     showsVerticalScrollIndicator={false}
     ListEmptyComponent={()=>(
