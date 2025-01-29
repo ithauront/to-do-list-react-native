@@ -12,22 +12,26 @@ interface tasksData {
 }
 
 export function Home(){
-   const [tasks, setTask] = useState<tasksData[]>([
+   const [tasks, setTasks] = useState<tasksData[]>([
     { id:'1',  description:'Fazer as compras', completed: false},
      { id:'2',  description:'Lavar as roupas', completed: false}
     ])
 
     function handleToogleTask(id: string) {
-        setTask(prev=> prev.map(task=>task.id ===id
+        setTasks(prev=> prev.map(task=>task.id ===id
              ? {...task, completed:!task.completed}
             :task))
     }
+
+    function handleDeleteTask(id: string) {
+        setTasks((prev) => prev.filter((task) => task.id !== id))
+      }
 
     const sortedTasks= [...tasks].sort((a,b)=>{
         return Number(a.completed) - Number(b.completed)})
 
     const completedCount = tasks.filter(task=>task.completed).length
-    
+
     return(
         <View style={styles.container}>
             <View style={styles.background}>
@@ -55,6 +59,7 @@ export function Home(){
        description={item.description}
        completed={item.completed}
        onToggleTask={handleToogleTask}
+       onDeleteTask={handleDeleteTask}
        />
     )}
     showsVerticalScrollIndicator={false}

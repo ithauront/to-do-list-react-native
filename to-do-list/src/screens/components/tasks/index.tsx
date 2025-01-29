@@ -7,23 +7,21 @@ interface TaskProps {
     description: string,
     completed?: boolean,
     onToggleTask: (id:string)=>void
+    onDeleteTask: (id:string) => void
 }
 
-export function Task({id, description, completed, onToggleTask}: TaskProps) {
-    function handleCompleteTask() {
-        onToggleTask(id)
-    }
+export function Task({id, description, completed, onToggleTask, onDeleteTask}: TaskProps) {
 
     return(
         <View style={styles.container} >
             <TouchableOpacity 
             style={completed?styles.buttonCheck:styles.button} 
-            onPress={handleCompleteTask}>
+            onPress={()=>onToggleTask(id)}>
                 {completed?<Text>✔</Text>:null}
             </TouchableOpacity>
            
             <Text style={completed?styles.nameCheck:styles.name}>{description}</Text>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={()=>onDeleteTask(id)}>
                <Image source={require('./img/trash.png')} />
             </TouchableOpacity>
         </View>
