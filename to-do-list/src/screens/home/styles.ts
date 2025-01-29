@@ -11,5 +11,24 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#0D0D0D',
     },
- 
+    body: {
+        alignItems: 'center',
+    },
+    counterBar: {
+        width: "90%",
+        height: 39,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+        borderBottomColor: '#333333',
+    },
+    emptyList: {
+        padding: 48,
+        alignItems: 'center',
+        gap: 16,
+        
+    },
+    emptyListText: {
+        color: '#808080',
+    }
 })
