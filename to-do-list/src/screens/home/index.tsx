@@ -1,4 +1,4 @@
-import { FlatList, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Image, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useState } from "react";
 import { Form } from "../components/form";
@@ -12,10 +12,20 @@ interface tasksData {
 }
 
 export function Home(){
-   const [tasks, setTasks] = useState<tasksData[]>([
-    { id:'1',  description:'Fazer as compras', completed: false},
-     { id:'2',  description:'Lavar as roupas', completed: false}
-    ])
+   const [tasks, setTasks] = useState<tasksData[]>([])
+   const [nextId, setNextId] = useState(1);
+   
+   function handleTaskAdd(description: string) {
+    if(tasks.some(task=> task.description === description))
+         {return Alert.alert('Tarefa ja existe', 'Por favor esolha outra descrição para tarefa ou reative a existe.')}
+    const task:tasksData = {
+        id: String(nextId),
+        description,
+        completed: false
+    }
+    setTasks(prev => [...prev, task])
+    setNextId(prev=> prev +1)
+   }
 
     function handleToogleTask(id: string) {
         setTasks(prev=> prev.map(task=>task.id ===id
@@ -37,7 +47,7 @@ export function Home(){
             <View style={styles.background}>
                  <Image source={require('./img/Logo.png')}/>
             </View>
-         <Form />
+         <Form onTaskAdd={handleTaskAdd}/>
          <View style={styles.body}>
          <View style={styles.counterBar}>
             <View style={{flexDirection: 'row', gap: 8,}}>

@@ -2,8 +2,19 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { useState } from "react";
 
-export function Form () {
+interface FormProps{
+    onTaskAdd: (description:string)=>void
+}
+
+export function Form ({onTaskAdd}:FormProps) {
      const [isFocused, setIsFocused] = useState(false);
+     const [description, setDescription] = useState('')
+     function handleOnTaskAdd(){
+        onTaskAdd(description)
+        setDescription('')
+     }
+
+
     return (
         <View style={styles.formContainer} >
         <View style={styles.form}>
@@ -16,8 +27,10 @@ export function Form () {
             onBlur={() => setIsFocused(false)}
             placeholder="Adicione uma nova tarefa"
             placeholderTextColor="#808080"
+            onChangeText={setDescription}
+            value={description}
              />
-            <TouchableOpacity style={styles.button} onPress={()=>console.log('apertou o botão')}>
+            <TouchableOpacity style={styles.button} onPress={handleOnTaskAdd}>
                 <Text style={styles.buttonText}>⊕</Text>
             </TouchableOpacity>
         </View>
