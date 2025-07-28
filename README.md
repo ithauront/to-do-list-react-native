@@ -26,11 +26,11 @@ This is a simple mobile to-do list app built with React Native and Expo. Users c
 
    * React Native StyleSheet
 
-🎨 UI & Styling
+## 🎨 UI & Styling
 
 The interface is built using native React Native components like View, Text, TouchableOpacity, TextInput, and FlatList. All styles are handled via the StyleSheet API.
 
-🧠 What I Praticed
+## 🧠 What I Praticed
 
 This was one of  my first project using React Native, and it helped me understand the basics of building mobile apps. In this project, I preticed how to:
 
